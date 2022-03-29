@@ -51,17 +51,5 @@ python 3.7、pytorch 1.6.0-1.8.1、gym 0.21.0
 [Google 开源项目风格指南——中文版](https://zh-google-styleguide.readthedocs.io/en/latest/google-python-styleguide/python_style_rules/#comments)
 
 ## 强化学习环境配置
-创建环境
-conda create --name gym
-激活环境
-conda activate gym
-安装python
-conda install python==3.8.3
-安装gym pygame
-pip3 install gym pygame
-安装pytorch
-conda install pytorch==1.5.1 torchvision==0.6.1 cudatoolkit=10.2 -c pytorch
-安装matplotlib seaborn
-conda install matplotlib seaborn
-其他包提示缺少后再安装即可
-在vscode中使用jupyter notebook，ctrl+shift+p选择python解释器，运行ipynb时会提示缺少ipykernel，按照提示安装即可。
+
+[参考CSDN博客](https://blog.csdn.net/weixin_43868436/article/details/123335941)

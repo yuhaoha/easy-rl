@@ -70,7 +70,7 @@ def plot_losses(losses, algo="DQN", save=True, path='./'):
 
 
 def save_results(rewards, ma_rewards, tag='train', path='./results'):
-    ''' 保存奖励
+    ''' 保存奖励 rewards和ma_rewards列表,存储每个回合得到的奖励和平滑奖励
     '''
     np.save(path+'{}_rewards.npy'.format(tag), rewards)
     np.save(path+'{}_ma_rewards.npy'.format(tag), ma_rewards)
