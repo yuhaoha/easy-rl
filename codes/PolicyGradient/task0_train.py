@@ -20,7 +20,7 @@ import datetime
 from itertools import count
 
 from PolicyGradient.agent import PolicyGradient
-from common.plot import plot_rewards
+from common.utils import plot_rewards
 from common.utils import save_results,make_dir
 
 curr_time = datetime.datetime.now().strftime("%Y%m%d-%H%M%S")  # 获取当前时间
@@ -29,6 +29,9 @@ class PGConfig:
     def __init__(self):
         self.algo = "PolicyGradient"  # 算法名称
         self.env = 'CartPole-v0' # 环境名称
+        self.env_name = 'CartPole-v0' # 画图需要
+        self.algo_name = 'PolicyGradient'
+        self.save = True
         self.result_path = curr_path+"/outputs/" + self.env + \
             '/'+curr_time+'/results/'  # 保存结果的路径
         self.model_path = curr_path+"/outputs/" + self.env + \
@@ -125,12 +128,11 @@ if __name__ == "__main__":
     make_dir(cfg.result_path, cfg.model_path)
     agent.save(path=cfg.model_path)
     save_results(rewards, ma_rewards, tag='train', path=cfg.result_path)
-    plot_rewards(rewards, ma_rewards, tag="train",
-                 algo=cfg.algo, path=cfg.result_path)
+    plot_rewards(rewards, ma_rewards, tag="train", plot_cfg=cfg)
     # eval
     env,agent = env_agent_config(cfg,seed=10)
     agent.load(path=cfg.model_path)
     rewards,ma_rewards = eval(cfg,env,agent)
     save_results(rewards,ma_rewards,tag='eval',path=cfg.result_path)
-    plot_rewards(rewards,ma_rewards,tag="eval",env=cfg.env,algo = cfg.algo,path=cfg.result_path)
+    plot_rewards(rewards,ma_rewards,tag="eval", plot_cfg=cfg)
 
