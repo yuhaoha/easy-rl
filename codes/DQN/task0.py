@@ -24,7 +24,7 @@ class Config:
         self.algo_name = 'DQN'  # 算法名称
         self.env_name = 'CartPole-v0'  # 环境名称
         self.device = torch.device(
-            "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPUgjgjlkhfsf风刀霜的撒发十
+            "cuda" if torch.cuda.is_available() else "cpu")  # 检测GPU
         self.seed = 10 # 随机种子，置0则不设置随机种子
         self.train_eps = 200  # 训练的回合数
         self.test_eps = 30  # 测试的回合数
@@ -76,6 +76,7 @@ def train(cfg, env, agent):
         ep_reward = 0  # 记录一回合内的奖励
         state = env.reset()  # 重置环境，返回初始状态
         while True:
+            env.render()
             action = agent.choose_action(state)  # 选择动作
             next_state, reward, done, _ = env.step(action)  # 更新环境，返回transition
             agent.memory.push(state, action, reward,
@@ -86,7 +87,7 @@ def train(cfg, env, agent):
             if done:
                 break
         if (i_ep + 1) % cfg.target_update == 0:  # 智能体目标网络更新
-            agent.target_net.load_state_dict(agent.policy_net.state_dict())
+            agent.target_net.load_state_dict(agent.policy_net.state_dict()) # pytorch以字典形式存储网络的参数
         rewards.append(ep_reward)
         if ma_rewards:
             ma_rewards.append(0.9 * ma_rewards[-1] + 0.1 * ep_reward)
@@ -112,6 +113,7 @@ def test(cfg, env, agent):
         ep_reward = 0  # 记录一回合内的奖励
         state = env.reset()  # 重置环境，返回初始状态
         while True:
+            env.render()
             action = agent.choose_action(state)  # 选择动作
             next_state, reward, done, _ = env.step(action)  # 更新环境，返回transition
             state = next_state  # 更新下一个状态
